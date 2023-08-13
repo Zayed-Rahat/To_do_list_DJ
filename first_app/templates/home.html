@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
+{% block content%}
+<div style="width:80%;margin : auto;">
+    <h1>List of Tasks</h1>
+
+{% if tasklist %}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in tasklist %}
+      <tr>
+        <td>{{item.task_title}}</td>
+        <td>{{item.task_description}}</td>
+        <td>
+          {% if task.is_completed %}
+          <span>Completed</span>
+         {% else %}
+          <span>Incomplete</span>
+          {% endif %}
+        </td>
+        <td><a  class='btn btn-primary btn-sm' href="{% url 'edit_task' pk=item.pk %}" >Edit</a> 
+            <a class='btn btn-danger btn-sm' href="{% url 'delete_task' pk=item.pk %}">Delete</a>
+            <a class='btn btn-success btn-sm' href="{% url 'complete_confirm' pk=item.pk %}">Complete</a>
+         </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h3>No Data avaiable</h3>
+  {% endif %}
+</div>
+{% endblock %}
